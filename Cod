@@ -3,7 +3,7 @@ import numpy as np
 from PIL import Image
 
 def rgb_to_grayscale(image_path):
-    image = Image.open(image_path)
+    image = Image.open(photo1.jpg)
     grayscale_image = image.convert('L')  
     return np.array(grayscale_image)
 
