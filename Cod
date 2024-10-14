@@ -20,7 +20,7 @@ def save_image(image, path):
     cv2.imwrite(path, image)
 
 def main():
-    image_paths = ["images/photo1.jpg", "images/photo2.jpg"]
+    image_paths = ["photo1.jpg", "photo2.jpg"]
     
     for idx, image_path in enumerate(image_paths):
         grayscale_image = rgb_to_grayscale(image_path)
@@ -31,7 +31,7 @@ def main():
         
         original_image = Image.open(image_path)
         object_image = extract_object(original_image, binary_image)
-        save_image(object_image, f"results/object_{idx}.png")
+        save_image(object_image, "result")
 
 if __name__ == "__main__":
     main()
