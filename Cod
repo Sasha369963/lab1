@@ -1,0 +1,37 @@
+import cv2
+import numpy as np
+from PIL import Image
+
+def rgb_to_grayscale(image_path):
+    image = Image.open(image_path)
+    grayscale_image = image.convert('L')  
+    return np.array(grayscale_image)
+
+def apply_otsu_binarization(grayscale_image):
+    _, binary_image = cv2.threshold(grayscale_image, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
+    return binary_image
+
+def extract_object(original_image, binary_mask):
+    original = np.array(original_image)
+    object_image = cv2.bitwise_and(original, original, mask=binary_mask)
+    return object_image
+
+def save_image(image, path):
+    cv2.imwrite(path, image)
+
+def main():
+    image_paths = ["images/photo1.jpg", "images/photo2.jpg"]
+    
+    for idx, image_path in enumerate(image_paths):
+        grayscale_image = rgb_to_grayscale(image_path)
+        save_image(grayscale_image, f"results/gray_{idx}.png")
+        
+        binary_image = apply_otsu_binarization(grayscale_image)
+        save_image(binary_image, f"results/binary_{idx}.png")
+        
+        original_image = Image.open(image_path)
+        object_image = extract_object(original_image, binary_image)
+        save_image(object_image, f"results/object_{idx}.png")
+
+if __name__ == "__main__":
+    main()
