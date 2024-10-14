@@ -35,3 +35,9 @@ def main():
 
 if __name__ == "__main__":
     main()
+t = otsu(to_grayscale(image))
+mask = create_binary_mask(to_grayscale(image), t)
+mask = np.array(mask * 255, dtype=np.uint8)
+colored_mask = cv2.cvtColor(mask, cv2.COLOR_GRAY2BGR)
+masked_image = cv2.bitwise_and(image, colored_mask)
+cv2.imwrite('result.png', masked_image)
